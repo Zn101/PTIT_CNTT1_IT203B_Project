@@ -31,7 +31,7 @@ public class RoomDAOImpl implements IRoomDAO {
         List<Room> list = new ArrayList<>();
         String sql = "SELECT * FROM rooms";
 
-        try (Connection conn = JDBCConnection.getConnection();
+        try (Connection conn = JDBCConnection   .getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -69,7 +69,7 @@ public class RoomDAOImpl implements IRoomDAO {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM rooms WHERE id=?";
 
         try (Connection conn = JDBCConnection.getConnection();
@@ -80,5 +80,6 @@ public class RoomDAOImpl implements IRoomDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

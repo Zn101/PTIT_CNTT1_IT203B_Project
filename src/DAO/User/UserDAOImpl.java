@@ -2,20 +2,16 @@ package ra.edu.ra.edu.src.DAO.User;
 
 import ra.edu.ra.edu.src.model.User;
 import ra.edu.ra.edu.src.util.JDBCConnection;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements IUserDAO {
-
-    // ================= INSERT =================
     @Override
     public void insert(User user) {
         String sql = "INSERT INTO users(username, password, role, phone, department) VALUES (?, ?, ?, ?, ?)";
-
         try (Connection conn = JDBCConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
@@ -24,13 +20,16 @@ public class UserDAOImpl implements IUserDAO {
             ps.setString(5, user.getDepartment());
 
             ps.executeUpdate();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    user.setId(rs.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi thêm user", e);
         }
     }
 
-    // ================= FIND BY USERNAME =================
     @Override
     public User findByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -39,20 +38,18 @@ public class UserDAOImpl implements IUserDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                return mapResultSetToUser(rs);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUser(rs);
+                }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi tìm user theo username", e);
         }
-
         return null;
     }
 
-    // ================= FIND BY ID =================
     @Override
     public User findById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -61,20 +58,18 @@ public class UserDAOImpl implements IUserDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                return mapResultSetToUser(rs);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUser(rs);
+                }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi tìm user theo id", e);
         }
-
         return null;
     }
 
-    // ================= FIND ALL =================
     @Override
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
@@ -83,20 +78,19 @@ public class UserDAOImpl implements IUserDAO {
         try (Connection conn = JDBCConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                list.add(mapResultSetToUser(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToUser(rs));
+                }
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi hiển thị tất cả user", e);
         }
 
         return list;
     }
 
-    // ================= UPDATE =================
     @Override
     public void update(User user) {
         String sql = "UPDATE users SET username=?, password=?, role=?, phone=?, department=? WHERE id=?";
@@ -113,12 +107,11 @@ public class UserDAOImpl implements IUserDAO {
 
             ps.executeUpdate();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi cập nhật user", e);
         }
     }
 
-    // ================= DELETE =================
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM users WHERE id=?";
@@ -129,12 +122,11 @@ public class UserDAOImpl implements IUserDAO {
             ps.setInt(1, id);
             ps.executeUpdate();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi khi xóa user", e);
         }
     }
 
-    // ================= HELPER =================
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         return new User(
                 rs.getInt("id"),

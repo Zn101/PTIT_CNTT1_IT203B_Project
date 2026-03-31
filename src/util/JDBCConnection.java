@@ -17,11 +17,10 @@ public class JDBCConnection {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("Connected to database");
             }
         } catch (SQLException e) {
             System.out.println("Connection failed!");
-            e.printStackTrace();
+            throw new RuntimeException("Không thể kết nối database", e);
         }
         return connection;
     }

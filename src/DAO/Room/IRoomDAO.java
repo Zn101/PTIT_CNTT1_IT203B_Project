@@ -7,5 +7,5 @@ public interface IRoomDAO {
     void insert(Room room);
     List<Room> findAll();
     void update(Room room);
-    void delete(int id);
+    boolean delete(int id);
 }

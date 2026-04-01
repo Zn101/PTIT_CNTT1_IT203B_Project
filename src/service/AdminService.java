@@ -32,45 +32,49 @@ public class AdminService {
         roomDAO.update(room);
     }
 
-    public boolean deleteRoom(int id) {
-        return roomDAO.delete(id);
+    public boolean deleteRoom(int id) { return roomDAO.delete(id); }
+
+    public List<Room> searchRoomByName(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new IllegalArgumentException("Keyword cannot be empty");
+        }
+        return roomDAO.searchByName(keyword);
     }
 
     // ================= EQUIPMENT =================
 
+    // Thêm thiết bị
+    public void addEquipment(Equipment e) {
+        equipmentDAO.insert(e);
+    }
+
+    // Lấy tất cả
     public List<Equipment> getAllEquipments() {
         return equipmentDAO.findAll();
     }
 
-    public Equipment getEquipmentById(int id) {
+    // Tìm theo ID
+    public Equipment findEquipmentById(int id) {
         return equipmentDAO.findById(id);
     }
 
-    public void addEquipment(Equipment equipment) {
-        equipmentDAO.insert(equipment);
+    // Update full
+    public void updateEquipment(Equipment e) {
+        equipmentDAO.update(e);
     }
 
-    public boolean updateEquipment(Equipment equipment) {
-        Equipment existing = equipmentDAO.findById(equipment.getId());
-        if (existing == null) return false;
-
-        equipmentDAO.update(equipment);
-        return true;
-    }
-
-    public boolean updateEquipmentQuantity(int id, int qty) {
-        Equipment existing = equipmentDAO.findById(id);
-        if (existing == null) return false;
-
-        if (qty < 0 || qty > existing.getTotalQuantity()) return false;
-
+    // Update số lượng
+    public void updateEquipmentQuantity(int id, int qty) {
         equipmentDAO.updateQuantity(id, qty);
-        return true;
     }
 
+    // Xóa (có check)
     public boolean deleteEquipment(int id) {
-        Equipment existing = equipmentDAO.findById(id);
-        if (existing == null) return false;
+        Equipment e = equipmentDAO.findById(id);
+
+        if (e == null) {
+            return false;
+        }
 
         return equipmentDAO.delete(id);
     }

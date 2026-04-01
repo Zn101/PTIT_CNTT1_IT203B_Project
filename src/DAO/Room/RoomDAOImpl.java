@@ -76,10 +76,41 @@ public class RoomDAOImpl implements IRoomDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
+            int rows = ps.executeUpdate();
+
+            return rows > 0;
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<Room> searchByName(String keyword) {
+        List<Room> list = new ArrayList<>();
+        String sql = "SELECT * FROM rooms WHERE name LIKE ?";
+
+        try (Connection conn = JDBCConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + keyword + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Room(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("capacity"),
+                        rs.getString("location")
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

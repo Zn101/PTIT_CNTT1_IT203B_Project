@@ -15,10 +15,18 @@ public class AuthMenu {
     public void showMenu() {
         while (true) {
             try {
-                System.out.println("===== Hệ thống quản lý đặt phòng =====");
-                System.out.println("1. Đăng nhập");
-                System.out.println("2. Đăng ký (Nhân viên)");
-                System.out.println("0. Thoát");
+                System.out.println();
+                System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+                System.out.println("┃                   HỆ THỐNG QUẢN LÝ ĐẶT PHÒNG                         ┃");
+                System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+                System.out.println("┃                                    ┃                                 ┃");
+                System.out.println("┃        1. Đăng nhập                ┃     2. Đăng ký (Nhân viên)      ┃");
+                System.out.println("┃                                    ┃                                 ┃");
+                System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+                System.out.println("┃                                                                      ┃");
+                System.out.println("┃                             0. Thoát                                 ┃");
+                System.out.println("┃                                                                      ┃");
+                System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
                 System.out.print("Lựa chọn của bạn: ");
                 String choice = scanner.nextLine();
                 switch (choice) {
@@ -41,7 +49,6 @@ public class AuthMenu {
             }
         }
     }
-
 
     private static void login() {
         try {

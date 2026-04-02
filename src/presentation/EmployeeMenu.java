@@ -6,6 +6,7 @@ import ra.edu.ra.edu.src.model.User;
 import ra.edu.ra.edu.src.service.BookingService;
 import ra.edu.ra.edu.src.service.AdminService;
 import ra.edu.ra.edu.src.util.InputUtil;
+import ra.edu.ra.edu.src.util.ValidationUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,15 +26,25 @@ public class EmployeeMenu {
 
     public void showMenu() {
         while (true) {
-            System.out.println("===== EMPLOYEE MENU =====");
-            System.out.println("1. Xem phòng trống theo thời gian");
-            System.out.println("2. Đặt phòng");
-            System.out.println("3. Xem lịch của tôi");
-            System.out.println("4. Hủy booking");
-            System.out.println("5. Hồ sơ cá nhân");
-            System.out.println("0. Đăng xuất");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                        EMPLOYEE MENU                                       ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃ 1. Xem phòng trống theo giờ  ┃        2. Đặt phòng          ┃   3. Xem lịch của tôi        ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃     4. Hủy booking           ┃    5. Hồ sơ cá nhân          ┃        0. Đăng xuất          ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
-            int choice = InputUtil.inputNumber("Chọn: ");
+            String input = scanner.nextLine();
+            if (!ValidationUtil.isNumber(input)) {
+                System.out.println("Vui lòng nhập số hợp lệ");
+                continue;
+            }
+            int choice = Integer.parseInt(input);
 
             switch (choice) {
                 case 1:

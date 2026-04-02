@@ -26,6 +26,11 @@ public class BookingService {
         this.userDAO = new UserDAOImpl();
     }
 
+    public static List<Booking> findByRoomId(int roomId) {
+        IBookingDAO bookingDAO = new BookingDAOImpl();
+        return bookingDAO.findByRoomId(roomId);
+    }
+
     // ================= CREATE =================
     public boolean createBooking(int userId, int roomId,
                                  LocalDateTime start, LocalDateTime end, int people) {

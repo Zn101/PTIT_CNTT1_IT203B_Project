@@ -9,4 +9,5 @@ public interface IRoomDAO {
     void update(Room room);
     boolean delete(int id);
     List<Room> searchByName(String keyword);
+    Room findById(int id);
 }

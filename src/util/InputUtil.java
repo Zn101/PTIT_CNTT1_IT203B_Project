@@ -18,4 +18,17 @@ public class InputUtil {
             System.out.println("Vui lòng nhập số hợp lệ!");
         }
     }
+
+    public static String inputNonEmpty(String message) {
+        while (true) {
+            System.out.print(message);
+            String input = scanner.nextLine();
+
+            if (!ValidationUtil.isEmpty(input)) {
+                return input;
+            }
+
+            System.out.println("Không được để trống!");
+        }
+    }
 }

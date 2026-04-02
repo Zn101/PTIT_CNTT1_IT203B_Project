@@ -4,8 +4,7 @@ import ra.edu.ra.edu.src.model.*;
 import ra.edu.ra.edu.src.service.AdminService;
 import ra.edu.ra.edu.src.service.AuthService;
 import ra.edu.ra.edu.src.service.BookingService;
-import ra.edu.ra.edu.src.util.ConsoleUtil;
-import ra.edu.ra.edu.src.util.TimeUtil;
+import ra.edu.ra.edu.src.util.InputUtil;
 import ra.edu.ra.edu.src.util.ValidationUtil;
 
 import java.util.List;
@@ -19,21 +18,24 @@ public class AdminMenu {
 
     public void showMenu() {
         while (true) {
-            ;
-            System.out.println("===== Menu Admin =====");
-            System.out.println("1. Quản lý phòng họp");
-            System.out.println("2. Quản lý thiết bị");
-            System.out.println("3. Quản lý dịch vụ đi kèm");
-            System.out.println("4. Quản lý người dùng");
-            System.out.println("5. Duyệt Bookings, phân công");
-            System.out.println("0. Đăng xuất");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                         MENU ADMIN                                         ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃   1. Quản lý phòng họp       ┃   2. Quản lý thiết bị        ┃      3. Quản lý dịch vụ      ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃   4. Quản lý người dùng      ┃ 5. Duyệt & phân công Booking ┃        0. Đăng xuất          ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             System.out.print("Lựa chọn của bạn: ");
             String input = scanner.nextLine();
             if (!ValidationUtil.isNumber(input)) {
                 System.out.println("Vui lòng nhập số hợp lệ");
                 continue;
             }
-
             int choice = Integer.parseInt(input);
 
             switch (choice) {
@@ -45,6 +47,7 @@ public class AdminMenu {
                     break;
                 case 3:
                     serviceMenu();
+                    break;
                 case 4:
                     userMenu();
                     break;
@@ -61,32 +64,37 @@ public class AdminMenu {
 
     private void roomMenu() {
         while (true) {
-            ;
-            System.out.println("===== Quản lý phòng =====");
-            System.out.println("1. Xem tất cả các phòng");
-            System.out.println("2. Thêm phòng");
-            System.out.println("3. Cập nhật phòng");
-            System.out.println("4. Xóa phòng");
-            System.out.println("5. Tìm kiếm phòng");
-            System.out.println("0. Quay lại Menu Admin");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                       QUẢN LÝ PHÒNG                                        ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃  1. Xem tất cả các phòng     ┃      2. Thêm phòng           ┃     3. Cập nhật phòng        ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃      4. Xóa phòng            ┃     5. Tìm kiếm phòng        ┃  0. Quay lại Menu Admin      ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             System.out.print("Lựa chọn của bạn: ");
-            int choice = Integer.parseInt(scanner.nextLine());
+            String input = scanner.nextLine();
+            if (!ValidationUtil.isNumber(input)) {
+                System.out.println("Vui lòng nhập số hợp lệ");
+                continue;
+            }
+            int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
                     viewRooms();
-                    TimeUtil.sleep(3000);
                     break;
                 case 2:
                     addRoom();
-                    TimeUtil.sleep(3000);
                     break;
                 case 3:
                     updateRoom();
-                    TimeUtil.sleep(3000);
                     break;
                 case 4:
                     deleteRoom();
-                    TimeUtil.sleep(3000);
                     break;
                 case 5:
                     searchRoomByName();
@@ -98,23 +106,35 @@ public class AdminMenu {
     }
 
     private void addRoom() {
-        System.out.print("Tên phòng: ");
-        String name = scanner.nextLine();
+        String name = InputUtil.inputNonEmpty("Tên phòng: ");
 
-        System.out.print("Sức chứa: ");
-        int capacity = Integer.parseInt(scanner.nextLine());
+        int capacity;
+        while (true) {
+            capacity = InputUtil.inputNumber("Sức chứa: ");
+            if (capacity > 0) break;
+            System.out.println("Sức chứa phải > 0");
+        }
 
-        System.out.print("Vị trí: ");
-        String location = scanner.nextLine();
+        String location = InputUtil.inputNonEmpty("Vị trí: ");
 
         Room room = new Room(0, name, capacity, location);
-        adminService.addRoom(room);
 
-        System.out.println("Thêm phòng thành công");
+        boolean success = adminService.addRoom(room);
+
+        if (success) {
+            System.out.println("Thêm phòng thành công");
+        } else {
+            System.out.println("Tên phòng đã tồn tại!");
+        }
     }
 
     private void viewRooms() {
         List<Room> rooms = adminService.getAllRooms();
+
+        if (rooms.isEmpty()) {
+            System.out.println("Không có phòng nào!");
+            return;
+        }
 
         for (Room r : rooms) {
             System.out.println(r.getId() + " | " + r.getName() + " | " + r.getCapacity());
@@ -122,37 +142,50 @@ public class AdminMenu {
     }
 
     private void updateRoom() {
-        System.out.print("Id phòng cần cập nhật: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = InputUtil.inputNumber("Id phòng cần cập nhật: ");
 
-        System.out.print("Tên phòng mới: ");
-        String name = scanner.nextLine();
+        String name = InputUtil.inputNonEmpty("Tên phòng mới: ");
 
-        System.out.print("Sức chứa mới: ");
-        int capacity = Integer.parseInt(scanner.nextLine());
+        int capacity;
+        while (true) {
+            capacity = InputUtil.inputNumber("Sức chứa mới: ");
+            if (capacity > 0) break;
+            System.out.println("Sức chứa phải > 0");
+        }
 
-        System.out.print("Địa điểm mới: ");
-        String location = scanner.nextLine();
+        String location = InputUtil.inputNonEmpty("Địa điểm mới: ");
 
         Room room = new Room(id, name, capacity, location);
-        adminService.updateRoom(room);
+
+        boolean success = adminService.updateRoom(room);
+
+        if (success) {
+            System.out.println("Đã sửa thành công");
+        } else {
+            System.out.println("Tên phòng đã tồn tại!");
+        }
 
         System.out.println("Đã sửa thành công");
     }
 
     private void deleteRoom() {
-        System.out.print("Id phòng cần xóa: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = InputUtil.inputNumber("Id phòng cần xóa: ");
+
+        System.out.print("Bạn có chắc muốn xóa? (y/n): ");
+        String confirm = scanner.nextLine();
+
+        if (!confirm.equalsIgnoreCase("y")) {
+            System.out.println("Đã hủy xóa");
+            return;
+        }
 
         adminService.deleteRoom(id);
-
         System.out.println("Xóa phòng thành công");
     }
 
     private void searchRoomByName() {
         try {
-            System.out.print("Nhập tên phòng cần tìm: ");
-            String keyword = scanner.nextLine();
+            String keyword = InputUtil.inputNonEmpty("Nhập tên phòng cần tìm: ");
 
             List<Room> rooms = adminService.searchRoomByName(keyword);
 
@@ -161,36 +194,36 @@ public class AdminMenu {
             } else {
                 System.out.println("Kết quả tìm kiếm:");
                 for (Room room : rooms) {
-                    System.out.println(room);
+                    System.out.println(room.getId() + " | " + room.getName()
+                            + " | " + room.getCapacity() + " | " + room.getLocation());
                 }
             }
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Đã xảy ra lỗi khi tìm kiếm!");
         }
-
-        TimeUtil.sleep(3000);
     }
 
     private void equipmentMenu() {
         while (true) {
-            ConsoleUtil.clear();
-            System.out.println("===== Quản lý thiết bị =====");
-            System.out.println("1. Xem tất cả thiết bị");
-            System.out.println("2. Thêm thiết bị");
-            System.out.println("3. Sửa thông tin thiết bị");
-            System.out.println("4. Xóa thiết bị");
-            System.out.println("0. Quay lại Menu Admin");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                     QUẢN LÝ THIẾT BỊ                                       ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃  1. Xem tất cả thiết bị      ┃      2. Thêm thiết bị        ┃  3. Sửa thông tin thiết bị   ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃      4. Xóa thiết bị         ┃                              ┃  0. Quay lại Menu Admin      ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             System.out.print("Lựa chọn của bạn: ");
-
             String input = scanner.nextLine();
             if (!ValidationUtil.isNumber(input)) {
                 System.out.println("Vui lòng nhập số!");
                 continue;
             }
-
             int choice = Integer.parseInt(input);
 
             switch (choice) {
@@ -211,8 +244,6 @@ public class AdminMenu {
                 default:
                     System.out.println("Không hợp lệ!");
             }
-
-            TimeUtil.sleep(2000);
         }
     }
 
@@ -224,6 +255,7 @@ public class AdminMenu {
             return;
         }
 
+        System.out.println("===== DANH SÁCH THIẾT BỊ =====");
         for (Equipment e : list) {
             System.out.println(
                     e.getId() + " | " +
@@ -241,35 +273,53 @@ public class AdminMenu {
 
         while (ValidationUtil.isEmpty(name)) {
             System.out.println("Không được để trống!");
+            System.out.print("Nhập lại tên: ");
             name = scanner.nextLine();
         }
 
-        System.out.print("Tổng số lượng: ");
-        int total = inputNumber("Nhập lại số: ");
+        int total = inputNumber("Tổng số lượng (>0): ");
+
+        while (total <= 0) {
+            System.out.println("Phải > 0!");
+            total = inputNumber("Nhập lại: ");
+        }
 
         System.out.print("Trạng thái (GOOD/BROKEN): ");
         String status = scanner.nextLine();
 
+        while (!status.equalsIgnoreCase("GOOD") && !status.equalsIgnoreCase("BROKEN")) {
+            System.out.println("Chỉ được nhập GOOD hoặc BROKEN!");
+            System.out.print("Nhập lại: ");
+            status = scanner.nextLine();
+        }
+
         Equipment e = new Equipment();
-        e.setName(name);
+        e.setName(name.trim());
         e.setTotalQuantity(total);
-        e.setAvailableQuantity(total); // mới tạo = total
-        e.setStatus(status);
+        e.setAvailableQuantity(total);
+        e.setStatus(status.toUpperCase());
 
-        adminService.addEquipment(e);
+        boolean success = adminService.addEquipment(e);
 
-        System.out.println("Thêm thiết bị thành công!");
+        if (success) {
+            System.out.println("Thêm thiết bị thành công!");
+        } else {
+            System.out.println("Thêm thất bại! (Có thể trùng tên hoặc dữ liệu không hợp lệ)");
+        }
     }
 
     private void updateEquipment() {
         int id = inputNumber("Id thiết bị: ");
 
-        System.out.print("Số lượng available mới: ");
-        int qty = inputNumber("Nhập lại số: ");
+        int qty = inputNumber("Số lượng available mới: ");
 
-        adminService.updateEquipmentQuantity(id, qty);
+        boolean success = adminService.updateEquipment(id, qty);
 
-        System.out.println("Cập nhật thành công!");
+        if (success) {
+            System.out.println("Cập nhật thành công!");
+        } else {
+            System.out.println("Cập nhật thất bại! (Sai id hoặc số lượng không hợp lệ)");
+        }
     }
 
     private void deleteEquipment() {
@@ -280,21 +330,31 @@ public class AdminMenu {
         if (success) {
             System.out.println("Xóa thành công!");
         } else {
-            System.out.println("Không tìm thấy thiết bị!");
+            System.out.println("Xóa thất bại! (Không tồn tại hoặc đang được sử dụng)");
         }
     }
 
     public void serviceMenu() {
         while (true) {
-            ConsoleUtil.clear();
-            System.out.println("===== QUẢN LÝ DỊCH VỤ =====");
-            System.out.println("1. Xem tất cả dịch vụ");
-            System.out.println("2. Thêm dịch vụ");
-            System.out.println("3. Sửa dịch vụ");
-            System.out.println("4. Xóa dịch vụ");
-            System.out.println("0. Quay lại");
-
-            int choice = inputNumber("Lựa chọn: ");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                     QUẢN LÝ DỊCH VỤ                                        ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃  1. Xem tất cả dịch vụ       ┃      2. Thêm dịch vụ         ┃        3. Sửa dịch vụ        ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃      4. Xóa dịch vụ          ┃                              ┃        0. Quay lại           ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            System.out.print("Lựa chọn của bạn: ");
+            String input = scanner.nextLine();
+            if (!ValidationUtil.isNumber(input)) {
+                System.out.println("Vui lòng nhập số hợp lệ");
+                continue;
+            }
+            int choice = Integer.parseInt(input);
 
             switch (choice) {
                 case 1:
@@ -325,8 +385,13 @@ public class AdminMenu {
             return;
         }
 
+        System.out.println("===== DANH SÁCH DỊCH VỤ =====");
         for (Service s : list) {
-            System.out.println(s.getId() + " | " + s.getName() + " | " + s.getPrice());
+            System.out.println(
+                    s.getId() + " | " +
+                            s.getName() + " | " +
+                            s.getPrice()
+            );
         }
     }
 
@@ -334,24 +399,41 @@ public class AdminMenu {
         System.out.print("Tên dịch vụ: ");
         String name = scanner.nextLine();
 
-        if (ValidationUtil.isEmpty(name)) {
+        while (ValidationUtil.isEmpty(name)) {
             System.out.println("Tên không được để trống!");
-            return;
+            System.out.print("Nhập lại: ");
+            name = scanner.nextLine();
         }
 
-        System.out.print("Giá: ");
-        String priceInput = scanner.nextLine();
+        double price;
+        while (true) {
+            System.out.print("Giá (>0): ");
+            String priceInput = scanner.nextLine();
 
-        if (!ValidationUtil.isNumber(priceInput)) {
-            System.out.println("Giá phải là số!");
-            return;
+            if (!ValidationUtil.isNumber(priceInput)) {
+                System.out.println("Giá phải là số!");
+                continue;
+            }
+
+            price = Double.parseDouble(priceInput);
+
+            if (price <= 0) {
+                System.out.println("Giá phải > 0!");
+                continue;
+            }
+
+            break;
         }
 
-        double price = Double.parseDouble(priceInput);
+        boolean success = adminService.addService(
+                new Service(0, name.trim(), price)
+        );
 
-        adminService.addService(new Service(0, name, price));
-
-        System.out.println("Thêm dịch vụ thành công!");
+        if (success) {
+            System.out.println("Thêm dịch vụ thành công!");
+        } else {
+            System.out.println("Thêm thất bại! (Có thể trùng tên)");
+        }
     }
 
     private void updateService() {
@@ -362,27 +444,40 @@ public class AdminMenu {
         System.out.print("Tên mới: ");
         String name = scanner.nextLine();
 
-        if (ValidationUtil.isEmpty(name)) {
+        while (ValidationUtil.isEmpty(name)) {
             System.out.println("Tên không được để trống!");
-            return;
+            System.out.print("Nhập lại: ");
+            name = scanner.nextLine();
         }
 
-        System.out.print("Giá mới: ");
-        String priceInput = scanner.nextLine();
+        double price;
+        while (true) {
+            System.out.print("Giá mới (>0): ");
+            String priceInput = scanner.nextLine();
 
-        if (!ValidationUtil.isNumber(priceInput)) {
-            System.out.println("Giá phải là số!");
-            return;
+            if (!ValidationUtil.isNumber(priceInput)) {
+                System.out.println("Giá phải là số!");
+                continue;
+            }
+
+            price = Double.parseDouble(priceInput);
+
+            if (price <= 0) {
+                System.out.println("Giá phải > 0!");
+                continue;
+            }
+
+            break;
         }
 
-        double price = Double.parseDouble(priceInput);
-
-        boolean success = adminService.updateService(new Service(id, name, price));
+        boolean success = adminService.updateService(
+                new Service(id, name.trim(), price)
+        );
 
         if (success) {
             System.out.println("Cập nhật thành công!");
         } else {
-            System.out.println("ID không tồn tại hoặc dữ liệu không hợp lệ!");
+            System.out.println("Cập nhật thất bại! (ID không tồn tại / trùng tên / dữ liệu sai)");
         }
     }
 
@@ -396,24 +491,26 @@ public class AdminMenu {
         if (success) {
             System.out.println("Xóa thành công!");
         } else {
-            System.out.println("Không tìm thấy dịch vụ!");
+            System.out.println("Xóa thất bại! (Không tồn tại hoặc đang được sử dụng)");
         }
     }
 
     private void userMenu() {
         while (true) {
-            System.out.println("===== Quản lý người dùng =====");
-            System.out.println("1. Xem tất cả người dùng");
-            System.out.println("2. Thêm tài khoản SUPPORT");
-            System.out.println("0. Quay lại");
-
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                   QUẢN LÝ NGƯỜI DÙNG                                       ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃  1. Xem tất cả người dùng    ┃ 2. Thêm tài khoản SUPPORT    ┃        0. Quay lại           ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            System.out.print("Lựa chọn của bạn: ");
             String input = scanner.nextLine();
-
             if (!ValidationUtil.isNumber(input)) {
-                System.out.println("Vui lòng nhập số!");
+                System.out.println("Vui lòng nhập số hợp lệ");
                 continue;
             }
-
             int choice = Integer.parseInt(input);
 
             switch (choice) {
@@ -476,15 +573,25 @@ public class AdminMenu {
         BookingService bookingService = new BookingService();
 
         while (true) {
-            ;
-            System.out.println("===== QUẢN LÝ BOOKING =====");
-            System.out.println("1. Xem booking PENDING");
-            System.out.println("2. Duyệt / Từ chối booking");
-            System.out.println("3. Xem booking đã duyệt");
-            System.out.println("4. Phân công nhân viên hỗ trợ");
-            System.out.println("0. Quay lại");
-
-            int choice = inputNumber("Lựa chọn: ");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                      QUẢN LÝ BOOKING                                       ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃   1. Xem booking PENDING     ┃ 2. Duyệt / Từ chối booking   ┃  3. Xem booking đã duyệt     ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃ 4. Phân công NV hỗ trợ       ┃                              ┃        0. Quay lại           ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            System.out.print("Lựa chọn của bạn: ");
+            String input = scanner.nextLine();
+            if (!ValidationUtil.isNumber(input)) {
+                System.out.println("Vui lòng nhập số hợp lệ");
+                continue;
+            }
+            int choice = Integer.parseInt(input);
 
             switch (choice) {
                 case 1:

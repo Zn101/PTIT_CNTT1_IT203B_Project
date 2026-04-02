@@ -3,6 +3,7 @@ package ra.edu.ra.edu.src.presentation;
 import ra.edu.ra.edu.src.model.Booking;
 import ra.edu.ra.edu.src.model.User;
 import ra.edu.ra.edu.src.service.BookingService;
+import ra.edu.ra.edu.src.util.ValidationUtil;
 
 import java.util.List;
 import java.util.Scanner;
@@ -19,13 +20,22 @@ public class SupportMenu {
 
     public void showMenu() {
         while (true) {
-            System.out.println("===== SUPPORT MENU =====");
-            System.out.println("1. Xem công việc");
-            System.out.println("2. Cập nhật trạng thái");
-            System.out.println("0. Đăng xuất");
+            System.out.println();
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                                         SUPPORT MENU                                      ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┃     1. Xem công việc         ┃   2. Cập nhật trạng thái     ┃        0. Đăng xuất         ┃");
+            System.out.println("┃                              ┃                              ┃                              ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             System.out.print("Chọn: ");
 
-            int choice = Integer.parseInt(scanner.nextLine());
+            String input = scanner.nextLine();
+            if (!ValidationUtil.isNumber(input)) {
+                System.out.println("Vui lòng nhập số hợp lệ");
+                continue;
+            }
+            int choice = Integer.parseInt(input);
 
             switch (choice) {
                 case 1:
@@ -42,7 +52,6 @@ public class SupportMenu {
         }
     }
 
-    // ================= VIEW TASK =================
     private void viewTasks() {
         List<Booking> list = bookingService.getBookingsBySupport(currentUser.getId());
 
@@ -58,7 +67,6 @@ public class SupportMenu {
         }
     }
 
-    // ================= UPDATE STATUS =================
     private void updateStatus() {
         System.out.print("Nhập ID booking: ");
         int bookingId = Integer.parseInt(scanner.nextLine());

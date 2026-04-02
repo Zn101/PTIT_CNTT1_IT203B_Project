@@ -113,4 +113,34 @@ public class RoomDAOImpl implements IRoomDAO {
 
         return list;
     }
+
+    @Override
+    public Room findById(int id) {
+        String sql = "SELECT * FROM rooms WHERE id=?";
+
+        try (Connection conn = JDBCConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return map(rs);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private Room map(ResultSet rs) throws SQLException {
+        return new Room(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getInt("capacity"),
+                rs.getString("location")
+        );
+    }
 }

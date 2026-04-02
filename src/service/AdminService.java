@@ -1,5 +1,7 @@
 package ra.edu.ra.edu.src.service;
 
+import ra.edu.ra.edu.src.DAO.Booking.BookingDAOImpl;
+import ra.edu.ra.edu.src.DAO.Booking.IBookingDAO;
 import ra.edu.ra.edu.src.DAO.Equipment.EquipmentDAOImpl;
 import ra.edu.ra.edu.src.DAO.Equipment.IEquipmentDAO;
 import ra.edu.ra.edu.src.DAO.Room.IRoomDAO;
@@ -13,77 +15,135 @@ import ra.edu.ra.edu.src.model.*;
 import java.util.List;
 
 public class AdminService {
-
+    private IBookingDAO bookingDAO = new BookingDAOImpl();
     private IRoomDAO roomDAO = new RoomDAOImpl();
     private IEquipmentDAO equipmentDAO = new EquipmentDAOImpl();
     private IUserDAO userDAO = new UserDAOImpl();
 
     // ================= ROOM =================
+    public boolean addRoom(Room room) {
+        List<Room> list = roomDAO.searchByName(room.getName());
 
-    public void addRoom(Room room) {
+        if (!list.isEmpty()) {
+            return false;
+        }
+
         roomDAO.insert(room);
+        return true;
     }
 
     public List<Room> getAllRooms() {
         return roomDAO.findAll();
     }
 
-    public void updateRoom(Room room) {
+    public boolean updateRoom(Room room) {
+        List<Room> list = roomDAO.searchByName(room.getName());
+
+        for (Room r : list) {
+            if (r.getId() != room.getId()) {
+                return false;
+            }
+        }
+
         roomDAO.update(room);
+        return true;
     }
 
-    public boolean deleteRoom(int id) { return roomDAO.delete(id); }
+    public boolean deleteRoom(int id) {
+        Room existing = roomDAO.findById(id);
+        if (existing == null) {
+            System.out.println("Phòng không tồn tại!");
+            return false;
+        }
+
+        List<Booking> bookings = BookingService.findByRoomId(id);
+
+        if (!bookings.isEmpty()) {
+            System.out.println("Không thể xóa! Phòng đang có booking.");
+            return false;
+        }
+
+        boolean result = roomDAO.delete(id);
+
+        if (result) {
+            System.out.println("Xóa phòng thành công!");
+        } else {
+            System.out.println("Xóa thất bại!");
+        }
+
+        return result;
+    }
 
     public List<Room> searchRoomByName(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
-            throw new IllegalArgumentException("Keyword cannot be empty");
+            throw new IllegalArgumentException("Keyword không được để trống");
         }
-        return roomDAO.searchByName(keyword);
+
+        return roomDAO.searchByName(keyword.trim());
     }
 
     // ================= EQUIPMENT =================
-
-    // Thêm thiết bị
-    public void addEquipment(Equipment e) {
-        equipmentDAO.insert(e);
-    }
-
-    // Lấy tất cả
     public List<Equipment> getAllEquipments() {
         return equipmentDAO.findAll();
     }
 
-    // Tìm theo ID
-    public Equipment findEquipmentById(int id) {
-        return equipmentDAO.findById(id);
-    }
+    public boolean addEquipment(Equipment equipment) {
 
-    // Update full
-    public void updateEquipment(Equipment e) {
-        equipmentDAO.update(e);
-    }
-
-    // Update số lượng
-    public void updateEquipmentQuantity(int id, int qty) {
-        equipmentDAO.updateQuantity(id, qty);
-    }
-
-    // Xóa (có check)
-    public boolean deleteEquipment(int id) {
-        Equipment e = equipmentDAO.findById(id);
-
-        if (e == null) {
+        if (equipment.getName() == null || equipment.getName().trim().isEmpty()) {
             return false;
         }
+
+        List<Equipment> list = equipmentDAO.findAll();
+        for (Equipment e : list) {
+            if (e.getName().equalsIgnoreCase(equipment.getName().trim())) {
+                return false;
+            }
+        }
+
+        if (equipment.getTotalQuantity() <= 0) return false;
+
+        if (equipment.getAvailableQuantity() < 0 ||
+                equipment.getAvailableQuantity() > equipment.getTotalQuantity()) {
+            return false;
+        }
+
+        equipmentDAO.insert(equipment);
+        return true;
+    }
+
+    public boolean updateEquipment(int id, int qty) {
+        Equipment existing = equipmentDAO.findById(id);
+        if (existing == null) return false;
+
+        if (qty < 0 || qty > existing.getTotalQuantity()) {
+            return false;
+        }
+
+        equipmentDAO.updateQuantity(id, qty);
+        return true;
+    }
+
+    public boolean deleteEquipment(int id) {
+
+        // 1. Check tồn tại
+        Equipment existing = equipmentDAO.findById(id);
+        if (existing == null) return false;
 
         return equipmentDAO.delete(id);
     }
 
-    // ================= USER =================
+    public boolean updateQuantity(int id, int qty) {
 
-    public void createUser(User user) {
-        userDAO.insert(user);
+        Equipment existing = equipmentDAO.findById(id);
+        if (existing == null) return false;
+
+        if (qty < 0 || qty > existing.getTotalQuantity()) return false;
+
+        equipmentDAO.updateQuantity(id, qty);
+        return true;
     }
+
+    // ================= USER =================
 
     public List<User> getAllUsers() {
         return userDAO.findAll();
@@ -101,15 +161,54 @@ public class AdminService {
         return serviceDAO.findById(id);
     }
 
-    public void addService(Service service) {
+    public boolean addService(Service service) {
+        if (service == null) return false;
+
+        // validate name
+        if (service.getName() == null || service.getName().trim().isEmpty()) {
+            return false;
+        }
+
+        List<Service> list = serviceDAO.findAll();
+        for (Service s : list) {
+            if (s.getName().equalsIgnoreCase(service.getName().trim())) {
+                return false;
+            }
+        }
+
+        // validate price
+        if (service.getPrice() < 0) {
+            return false;
+        }
+
         serviceDAO.insert(service);
+        return true;
     }
 
     public boolean updateService(Service service) {
+        if (service == null) return false;
+
         Service existing = serviceDAO.findById(service.getId());
         if (existing == null) return false;
 
-        if (service.getPrice() < 0) return false;
+        // validate name
+        if (service.getName() == null || service.getName().trim().isEmpty()) {
+            return false;
+        }
+
+        // check trùng tên (trừ chính nó)
+        List<Service> list = serviceDAO.findAll();
+        for (Service s : list) {
+            if (s.getId() != service.getId() &&
+                    s.getName().equalsIgnoreCase(service.getName().trim())) {
+                return false;
+            }
+        }
+
+        // validate price
+        if (service.getPrice() < 0) {
+            return false;
+        }
 
         serviceDAO.update(service);
         return true;
@@ -118,6 +217,9 @@ public class AdminService {
     public boolean deleteService(int id) {
         Service existing = serviceDAO.findById(id);
         if (existing == null) return false;
+
+        // (Optional nâng cao)
+        // Có thể check nếu service đang được dùng trong booking → không cho xóa
 
         return serviceDAO.delete(id);
     }
